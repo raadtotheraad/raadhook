@@ -1,11 +1,11 @@
 {
     "scripts": {
-        "update": "git pull && bun && bun build && pm2 reload webhook-proxy webhook-proxy-processor || true",
-        "build": "bunx prisma migrate deploy && bunx prisma generate && rimraf dist && tsc",
+        "update": "git pull && npm && npm run build && pm2 reload webhook-proxy webhook-proxy-processor || true",
+        "build": "npx prisma migrate deploy && npx prisma generate && rimraf dist && tsc",
         "start": "node dist"
     },
     "dependencies": {
-        "@prisma/client": "^7.10.1",
+        "@prisma/client": "^6.19.3",
         "amqplib": "^0.8.0",
         "axios": "^0.22.0",
         "body-parser": "^1.19.0",
@@ -24,8 +24,8 @@
         "@types/ioredis": "^4.28.1",
         "@types/node": "^16.10.2",
         "@types/rate-limit-redis": "^1.7.2",
-        "prisma": "^7.10.1",
+        "prisma": "^6.19.3",
         "rimraf": "^3.0.2",
-        "typescript": "^7.0.2"
+        "typescript": "^5.9.3"
     }
 }
