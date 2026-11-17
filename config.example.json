@@ -8,5 +8,6 @@
         "queue": "webhook-proxy"
     },
     "redis": "redis://127.0.0.1/0",
-    "abuseThreshold": 12
+    "abuseThreshold": 12,
+    "abuseReportLink": "https://example.com/report-abuse"
 }

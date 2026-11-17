@@ -6,17 +6,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>WebhookProxy</title>
 
-        <meta property="og:title" content="WebhookProxy" />
+        <meta property="og:title" content="Raadhook" />
         <meta property="og:url" content="https://webhook.lewisakura.moe/" />
         <meta property="og:description" content="A Discord webhook proxy, primarily for Roblox games." />
         <meta property="og:image" content="https://webhook.lewisakura.moe/img/logo.png" />
 
         <meta name="theme-color" content="#5865f2" />
 
-        <link href="/css/bootstrap.min.css" rel="stylesheet" />
-        <link href="/css/bootstrap-extras.css" rel="stylesheet" />
-        <link href="/css/fontawesome.min.css" rel="stylesheet" />
-        <link href="/css/prism.css" rel="stylesheet" />
+        <link href="./css/bootstrap.min.css" rel="stylesheet" />
+        <link href="./css/bootstrap-extras.css" rel="stylesheet" />
+        <link href="./css/fontawesome.min.css" rel="stylesheet" />
+        <link href="./css/prism.css" rel="stylesheet" />
+
+        <link href="../config.json" rel="preload" as="fetch" />
 
         <noscript>
             <style>
@@ -26,12 +28,12 @@
             </style>
         </noscript>
 
-        <link href="/img/logo.svg" rel="icon" />
+        <link href="./img/Raadhook.png" rel="icon" />
 
-        <script src="/js/bootstrap.bundle.min.js"></script>
-        <script src="/js/iconify.min.js"></script>
-        <script src="/js/countUp.umd.min.js"></script>
-        <script src="/js/prism.js"></script>
+        <script src="./js/bootstrap.bundle.min.js"></script>
+        <script src="./js/iconify.min.js"></script>
+        <script src="./js/countUp.umd.min.js"></script>
+        <script src="./js/prism.js"></script>
     </head>
     <body>
         <div class="container my-3" id="httpWarning" style="display: none">
@@ -49,24 +51,36 @@
                 <p class="mb-0"></p>
             </div>
         </div>
+        <div class="container">
         <div class="px-4 py-5 my-5 text-center">
-            <img class="d-block mx-auto mb-4" src="/img/logo.svg" width="256" />
-            <h1 class="display-5 fw-bold">WebhookProxy</h1>
+            <img class="d-block mx-auto mb-4" src="./img/Raadhook.png" width="256" />
+            <h1 class="display-5 fw-bold">Raadhook</h1>
             <div class="col-lg-6 mx-auto">
-                <p class="lead mb-4">A Discord webhook proxy, primarily for Roblox games.</p>
+                <p class="lead mb-4">A Discord webhook proxy, primarily for Roblox games. This is a barely changed fork of lewisakura's
+                    <a href="https://github.com/lewisakura/webhook-proxy"> WebhookProxy</a>.
+                </p>
             </div>
-            <withscript>
-                <div class="container my-2 w-50">
+            <noscript>
+                <div class="container my-3">
+                    <div class="alert alert-warning">
+                        <p class="mb-0">
+                            JavaScript is disabled. For more instructions on how to use this, please enable JavaScript.
+                        </p>
+                    </div>
+                </div>
+            </noscript>
+            <withscript
+                <div>
                     <div class="d-flex gap-2 justify-content-center">
                         <input type="textbox" class="form-control" id="webhookUrl" placeholder="Webhook URL" />
                         <div class="d-flex align-items-center justify-content-center">
-                            <i class="fas fa-long-arrow-alt-right fa-2x"></i>
+                            <img src="./icons/arrow-narrow-right.svg" width="32" />
                         </div>
                         <input
                             type="textbox"
                             class="form-control"
                             id="webhookUrlOutput"
-                            placeholder="Output..."
+                            placeholder="Output"
                             readonly
                         />
                     </div>
@@ -86,9 +100,10 @@
                 <a
                     href="https://devforum.roblox.com/t/discord-webhook-proxy/1491725"
                     class="btn btn-secondary btn-lg px-4"
-                    >DevForum <i class="fas fa-external-link-alt"></i
+                    >DevForum (original post)<i class="fas fa-external-link-alt"></i
                 ></a>
             </div>
+        </div>
         </div>
 
         <main class="container">
@@ -173,8 +188,8 @@
             </div>
         </main>
 
-        <footer class="footer">
-            <div class="container d-flex justify-content-between">
+        <footer>
+            <div class="container d-flex justify-content-between align-items-center">
                 <div>
                     A thing by <a href="https://lewisakura.moe/">lewisakura</a>.
                     <span class="d-none d-lg-inline">Running version <code id="version">unknown</code>.</span>
@@ -184,7 +199,7 @@
                 <div>
                     <span class="d-none d-md-inline px-2">Is someone abusing the proxy?</span>
                     <a
-                        href="https://devforum.roblox.com/new-message?username=lewisakura&title=WebhookProxy%20Abuse%20Report&body=Please%20describe%20your%20abuse%20report%20in%20full.%20Include%20Discord%20webhook%20links/IDs%20when%20possible%20and%20show%20the%20abusive%20behaviour."
+                        id="abuseReportLink"
                         class="btn btn-danger btn-xs"
                         >Report abuse <i class="fas fa-external-link-alt"></i
                     ></a>
@@ -289,6 +304,14 @@ httpService:PostAsync("https://<span class="hostname">webhook.lewisakura.dev</sp
         </div>
 
         <script>
+            fetch("../config.json")
+                .then(response => response.json())
+                    .then(data => {
+                        document.getElementById("abuseReportLink").href = data.abuseReportLink;
+                    });
+        </script>
+
+        <script>
             const discordWebhookUrlRegex =
                 /https:\/\/(?:(?:canary|ptb|www)\.)?discord\.com\/api\/webhooks\/(\d+)\/([a-zA-Z0-9-_]+)\/?/i;
 
@@ -306,8 +329,12 @@ httpService:PostAsync("https://<span class="hostname">webhook.lewisakura.dev</sp
                     const token = parts[2];
 
                     output.value = `https://${window.location.host}/api/webhooks/${id}/${token}`;
+                } else if (value === '') {
+                    output.value = '';
+                    document.getElementById('webhookUrl').style.border = '';
                 } else {
                     output.value = '';
+                    document.getElementById('webhookUrl').style.border = '2px solid #ff2929';
                 }
             };
 
