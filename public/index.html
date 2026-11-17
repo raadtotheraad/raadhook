@@ -304,7 +304,7 @@ httpService:PostAsync("https://<span class="hostname">webhook.lewisakura.dev</sp
         </div>
 
         <script>
-            fetch("../../config.json")
+            fetch("/config.json")
                 .then(response => response.json())
                     .then(data => {
                         document.getElementById("abuseReportLink").href = data.abuseReportLink;

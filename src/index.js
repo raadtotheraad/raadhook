@@ -617,6 +617,11 @@ app.post('/api/webhooks/:id/:token/queue', webhookQueuePostRatelimit, async (req
         message: 'Queued successfully.'
     });
 });
+app.get('/config', (req, res) => {
+    res.json({
+        abuseReportLink: config.abuseReportLink
+    });
+});
 app.use(unknownEndpointRatelimit, (req, res, next) => {
     (0, log_1.warn)(req.ip, 'hit unknown endpoint');
     return res.status(404).json({
