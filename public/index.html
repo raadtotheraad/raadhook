@@ -197,12 +197,17 @@
 
                 <!-- This report button is primarily for the public instance. -->
                 <div>
-                    <span class="d-none d-md-inline px-2">Is someone abusing the proxy?</span>
-                    <a
-                        id="abuseReportLink"
-                        class="btn btn-danger btn-xs"
-                        >Report abuse <i class="fas fa-external-link-alt"></i
-                    ></a>
+                    <noscript>
+                        <span class="d-none d-md-inline px-2">You need to enable JavaScript to report abuse.</span>
+                    </noscript>
+                    <withscript>
+                        <span class="d-none d-md-inline px-2">Is someone abusing the proxy?</span>
+                        <a
+                            id="abuseReportLink"
+                            class="btn btn-danger btn-xs"
+                            >Report abuse <i class="fas fa-external-link-alt"></i
+                        ></a>
+                    </withscript>
                 </div>
             </div>
         </footer>
@@ -304,7 +309,7 @@ httpService:PostAsync("https://<span class="hostname">webhook.lewisakura.dev</sp
         </div>
 
         <script>
-            fetch("../../config.json")
+            fetch("/config.json")
                 .then(response => response.json())
                     .then(data => {
                         document.getElementById("abuseReportLink").href = data.abuseReportLink;
