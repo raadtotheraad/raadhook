@@ -816,7 +816,7 @@ app.post('/api/webhooks/:id/:token/queue', webhookQueuePostRatelimit, async (req
         message: 'Queued successfully.'
     });
 });
-app.get('/config', (req, res) => {
+app.get('/abuseReportLink', (req, res) => {
     res.json({
         abuseReportLink: config.abuseReportLink
     });
